@@ -1,0 +1,156 @@
+.form-container {
+  background-color: var(--white);
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+  padding: 32px 24px;
+  display: grid; /*repeated elsewhere*/
+  grid-template-columns: 1fr; /*repeated elsewhere*/
+  gap: 32px; /*repeated elsewhere*/
+}
+
+.bill-input {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+}
+
+label {
+  display: block;
+}
+
+.input-heading {
+  color: var(--grey-500);
+  margin-bottom: 8px;
+}
+
+/* Input elements */
+.user-input {
+  width: 100%;
+  color: var(--green-900);
+  text-align: right;
+  background-repeat: no-repeat;
+  background-position: left 16px center;
+  padding: 8px 16px;
+  font-size: 24px;
+  border-radius: 5px;
+  border: none;
+  background-color: var(--grey-50);
+}
+
+#cost-amount {
+  background-image: url(assets/icon-dollar.svg);
+}
+
+#number-of-people {
+  background-image: url(assets/icon-person.svg);
+}
+
+/* Tip selection grid */
+
+ul {
+  padding-left: 0px;
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  place-items: center;
+  gap: 16px;
+  font-size: 24px;
+  margin: 0;
+}
+
+li {
+  width: 100%;
+}
+
+button {
+  width: 100%;
+  text-align: center;
+  color: var(--white);
+  background-color: var(--green-900);
+  border-radius: 5px;
+  padding: 6px 16px;
+}
+
+#custom-btn {
+  background-color: var(--grey-50);
+  color: var(--grey-550);
+}
+
+.active {
+  background-color: var(--green-400);
+}
+
+/* Output section */
+
+#output-container {
+  background-color: var(--green-900);
+  border-radius: 15px;
+  padding: 24px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  justify-content: center;
+}
+
+.output-content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.output-text-amount {
+  color: var(--white);
+}
+
+.output-text-unit {
+  color: var(--grey-400);
+}
+
+.output-number {
+  color: var(--green-400);
+}
+
+/* Reset button */
+
+.reset-btn {
+  background-color: var(--green-400);
+  color: initial;
+  min-width: 281px;
+  height: 48px;
+}
+
+@media (min-width: 768px) {
+  ul {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .form-container {
+    padding: 48px 80px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    min-width: 608px;
+  }
+
+  .reset-btn {
+    min-width: 362px;
+  }
+  #output-container {
+    padding-inline: 32px;
+  }
+
+  .output-number {
+    font-size: 48px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .form-container {
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    padding: 32px;
+    max-width: 920px;
+  }
+
+  .reset-btn {
+    max-width: 333px;
+  }
+}
