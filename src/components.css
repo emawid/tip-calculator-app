@@ -16,6 +16,7 @@
 
 label {
   display: block;
+  position: relative;
 }
 
 .input-heading {
@@ -34,7 +35,16 @@ label {
   font-size: 24px;
   border-radius: 5px;
   border: none;
+  outline: none;
   background-color: var(--grey-50);
+}
+
+.user-input:focus {
+  outline: 2px solid var(--green-400);
+}
+
+.user-input:user-invalid {
+  outline: 2px solid var(--orange-400);
 }
 
 #cost-amount {
@@ -43,6 +53,21 @@ label {
 
 #number-of-people {
   background-image: url(assets/icon-person.svg);
+}
+
+.people-input-label-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* margin-bottom: 8px; */
+}
+
+.error-msg {
+  color: var(--orange-400);
+}
+
+.hidden {
+  display: none;
 }
 
 /* Tip selection grid */
@@ -71,6 +96,11 @@ button {
   padding: 6px 16px;
 }
 
+button:hover {
+  background-color: var(--green-200);
+  color: var(--black);
+}
+
 #custom-btn {
   background-color: var(--grey-50);
   color: var(--grey-550);
@@ -78,6 +108,7 @@ button {
 
 .active {
   background-color: var(--green-400);
+  color: var(--black);
 }
 
 /* Output section */
@@ -95,6 +126,7 @@ button {
 .output-content {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .output-text-amount {
@@ -116,6 +148,10 @@ button {
   color: initial;
   min-width: 281px;
   height: 48px;
+}
+
+.reset-btn:hover {
+  background-color: var(--green-200);
 }
 
 @media (min-width: 768px) {
@@ -152,5 +188,12 @@ button {
 
   .reset-btn {
     max-width: 333px;
+  }
+
+  #output-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 38px 32px 24px 32px;
   }
 }

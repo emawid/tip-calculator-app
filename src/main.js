@@ -1,72 +1,88 @@
 'use strict';
 
 //Input elements
-const bill = document.querySelector('#cost-amount');
-const numberOfPeople = document.querySelector('#number-of-people');
-const tipPercentage = document.querySelector('ul');
+
+const inputs = {
+  bill: document.querySelector('#cost-amount'),
+  numberOfPeople: document.querySelector('#number-of-people'),
+  tipPercentage: document.querySelector('ul'),
+  defaultTip: document.querySelector('#default-tip'),
+};
 
 //Output elements
-const tipPerPerson = document.querySelector('#tip-per-person');
-const totalPerPerson = document.querySelector('#total-per-person');
+const outputs = {
+  tipPerPerson: document.querySelector('#tip-per-person'),
+  totalPerPerson: document.querySelector('#total-per-person'),
+  errorMessage: document.querySelectorAll('.span-people'),
+};
 
 // Variable to track the selected tip percentage
-let selectedTipPercentage = null;
+let selectedTipPercentage = 0.1;
 
-//Function to grab the bill amount (outputs a number)
+//Function to validate inputs
 
-const billAmount = () => {
-  const billValue = parseFloat(bill.value);
-  console.log(billValue);
-  return billValue;
-};
+const validateInputs = e => {
+  const inputElement =
+    e.id === 'number-of-people' ? inputs.numberOfPeople : inputs.bill;
 
-//Function to grab the number of people (outputs a number)
-const people = () => {
-  const numberOfPeopleValue = parseFloat(numberOfPeople.value);
-  console.log(numberOfPeopleValue);
-  return numberOfPeopleValue;
-};
+  if (!inputElement.checkValidity()) {
+    inputElement.previousElementSibling.lastElementChild.classList.remove(
+      'hidden'
+    );
 
-//callback to calculate and render the total per person and tip amount per person
-
-const billAmountPerPerson = () => {
-  //Step 1: Validate user input
-  if (!bill.checkValidity()) {
-    console.log('Please enter a valid bill amount');
-    return;
-  } else if (!numberOfPeople.checkValidity()) {
-    console.log('Please enter a valid number of people');
-    return;
-  } else if (selectedTipPercentage === null) {
-    console.log('Please select a tip percentage');
-    return;
+    return false;
   }
 
-  //Step 2: Grab the values from the input fields
+  inputElement.previousElementSibling.lastElementChild.classList.add('hidden');
 
-  const billValue = billAmount();
-  const peopleValue = people();
-  const tipValue = billValue * selectedTipPercentage;
+  return true;
+};
 
-  //Step 3: Calculate the total per person and tip amount per person
+//function to calculate the amounts
+const calculateAmounts = (billValue, peopleValue, tipPercentage) => {
+  const tipValue = billValue * tipPercentage;
   const total = billValue / peopleValue;
   const tipValuePerPerson = tipValue / peopleValue;
 
-  //Step 4: Render the calculated numbers to the DOM
-  totalPerPerson.textContent = `$${total.toFixed(2)}`;
-  tipPerPerson.textContent = `$${tipValuePerPerson.toFixed(2)}`;
+  return {
+    total,
+    tipValuePerPerson,
+  };
 };
 
-// Add event listeners to the input fields
+//function to render the amounts
+const renderAmounts = ({ total, tipValuePerPerson }) => {
+  if (total && tipValuePerPerson) {
+    outputs.totalPerPerson.textContent = `$${total.toFixed(2)}`;
+    outputs.tipPerPerson.textContent = `$${tipValuePerPerson.toFixed(2)}`;
+  }
+};
 
-bill.addEventListener('blur', billAmountPerPerson);
-numberOfPeople.addEventListener('blur', billAmountPerPerson);
+const billAmountPerPerson = e => {
+  //Step 1: Validate user input
+  if (!validateInputs(e.target)) return;
 
-tipPercentage.addEventListener('click', e => {
+  //Step 2: Grab the values from the input fields
+
+  const billValue = parseFloat(inputs.bill.value);
+  const peopleValue = parseFloat(inputs.numberOfPeople.value);
+
+  //Step 3: Calculate the amounts
+  const amounts = calculateAmounts(
+    billValue,
+    peopleValue,
+    selectedTipPercentage
+  );
+
+  //Step 5: Render the amounts
+  renderAmounts(amounts);
+};
+
+const handleTipSelection = e => {
   //add active class to the selected tip percentage
+
   if (e.target.tagName === 'BUTTON') {
     selectedTipPercentage = parseFloat(e.target.value);
-    console.log(selectedTipPercentage);
 
     //remove active class from all other tip percentages
     const allTips = document.querySelectorAll('button');
@@ -76,8 +92,46 @@ tipPercentage.addEventListener('click', e => {
 
     //add active class to the selected tip percentage
     e.target.classList.add('active');
+    billAmountPerPerson(e);
   }
-  //call the function to calculate the total per person and tip amount per person
-  //after selecting a tip percentage
-  billAmountPerPerson();
-});
+};
+
+// Add event listeners to the input fields
+
+inputs.bill.addEventListener('blur', billAmountPerPerson);
+inputs.numberOfPeople.addEventListener('blur', billAmountPerPerson);
+inputs.tipPercentage.addEventListener('click', handleTipSelection);
+
+// Reset button
+const resetButton = document.querySelector('.reset-btn');
+
+const handleReset = () => {
+  //reset input and output values
+  inputs.bill.value = '';
+  inputs.numberOfPeople.value = '';
+  outputs.tipPerPerson.textContent = '$0.00';
+  outputs.totalPerPerson.textContent = '$0.00';
+
+  //remove active class from all other tip percentages
+  const allTips = document.querySelectorAll('button');
+  allTips.forEach(tip => {
+    tip.classList.remove('active');
+  });
+
+  //reset default tip percentage
+  selectedTipPercentage = 0.1;
+  defaultTip.classList.add('active');
+
+  // Hide error message
+
+  outputs.errorMessage.forEach(error => {
+    error.classList.add('hidden');
+  });
+
+  //reset input outlines
+
+  inputs.bill.style.outline = 'none';
+  inputs.numberOfPeople.style.outline = 'none';
+};
+
+resetButton.addEventListener('click', handleReset);
