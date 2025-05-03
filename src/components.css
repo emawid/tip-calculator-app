@@ -102,13 +102,25 @@ button:hover {
 }
 
 #custom-btn {
+  padding: 0;
+  overflow: visible;
+}
+
+#custom-input {
+  width: 100%;
   background-color: var(--grey-50);
   color: var(--grey-550);
+  border: none;
+  outline: none;
+  text-align: center;
+  padding: 6px 0px;
+  border-radius: 5px;
 }
 
 .active {
   background-color: var(--green-400);
   color: var(--black);
+  width: 100%;
 }
 
 /* Output section */
