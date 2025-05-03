@@ -101,11 +101,6 @@ button:hover {
   color: var(--black);
 }
 
-#custom-btn {
-  padding: 0;
-  overflow: visible;
-}
-
 #custom-input {
   width: 100%;
   background-color: var(--grey-50);
