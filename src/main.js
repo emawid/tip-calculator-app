@@ -8,6 +8,7 @@ const inputs = {
   tipPercentage: document.querySelector('ul'),
   defaultTip: document.querySelector('#default-tip'),
   customTip: document.querySelector('#custom-input'),
+  resetButton: document.querySelector('.reset-btn'),
 };
 
 //Output elements
@@ -97,13 +98,7 @@ const handleTipSelection = e => {
   }
 };
 
-// Add event listeners to the input fields
-
-inputs.bill.addEventListener('blur', billAmountPerPerson);
-inputs.numberOfPeople.addEventListener('blur', billAmountPerPerson);
-inputs.tipPercentage.addEventListener('click', handleTipSelection);
-inputs.customTip.addEventListener('blur', e => {
-  //set the selected tip percentage to the custom input value
+const handleCustomTip = e => {
   selectedTipPercentage = parseFloat(e.target.value) / 100;
 
   //remove active class from all other tip percentages
@@ -113,10 +108,9 @@ inputs.customTip.addEventListener('blur', e => {
   });
 
   billAmountPerPerson(e);
-});
+};
 
 // Reset button
-const resetButton = document.querySelector('.reset-btn');
 
 const handleReset = () => {
   //reset input and output values
@@ -148,4 +142,10 @@ const handleReset = () => {
   inputs.numberOfPeople.style.outline = 'none';
 };
 
-resetButton.addEventListener('click', handleReset);
+// Add event listeners to the input fields
+
+inputs.bill.addEventListener('blur', billAmountPerPerson);
+inputs.numberOfPeople.addEventListener('blur', billAmountPerPerson);
+inputs.tipPercentage.addEventListener('click', handleTipSelection);
+inputs.customTip.addEventListener('blur', handleCustomTip);
+inputs.resetButton.addEventListener('click', handleReset);
