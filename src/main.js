@@ -1,8 +1,8 @@
-'use strict';
+import { validateInputs, calculateAmounts, renderAmounts } from './helper.js';
 
 //Input elements
 
-const inputs = {
+export const inputs = {
   bill: document.querySelector('#cost-amount'),
   numberOfPeople: document.querySelector('#number-of-people'),
   tipPercentage: document.querySelector('ul'),
@@ -12,7 +12,7 @@ const inputs = {
 };
 
 //Output elements
-const outputs = {
+export const outputs = {
   tipPerPerson: document.querySelector('#tip-per-person'),
   totalPerPerson: document.querySelector('#total-per-person'),
   errorMessage: document.querySelectorAll('.span-people'),
@@ -20,45 +20,6 @@ const outputs = {
 
 // Variable to track the selected tip percentage
 let selectedTipPercentage = 0.1;
-
-//Function to validate inputs
-
-const validateInputs = e => {
-  const inputElement =
-    e.id === 'number-of-people' ? inputs.numberOfPeople : inputs.bill;
-
-  if (!inputElement.checkValidity()) {
-    inputElement.previousElementSibling.lastElementChild.classList.remove(
-      'hidden'
-    );
-
-    return false;
-  }
-
-  inputElement.previousElementSibling.lastElementChild.classList.add('hidden');
-
-  return true;
-};
-
-//function to calculate the amounts
-const calculateAmounts = (billValue, peopleValue, tipPercentage) => {
-  const tipValue = billValue * tipPercentage;
-  const total = billValue / peopleValue;
-  const tipValuePerPerson = tipValue / peopleValue;
-
-  return {
-    total,
-    tipValuePerPerson,
-  };
-};
-
-//function to render the amounts
-const renderAmounts = ({ total, tipValuePerPerson }) => {
-  if (total && tipValuePerPerson) {
-    outputs.totalPerPerson.textContent = `$${total.toFixed(2)}`;
-    outputs.tipPerPerson.textContent = `$${tipValuePerPerson.toFixed(2)}`;
-  }
-};
 
 const billAmountPerPerson = e => {
   //Step 1: Validate user input
