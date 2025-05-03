@@ -7,6 +7,7 @@ const inputs = {
   numberOfPeople: document.querySelector('#number-of-people'),
   tipPercentage: document.querySelector('ul'),
   defaultTip: document.querySelector('#default-tip'),
+  customTip: document.querySelector('#custom-input'),
 };
 
 //Output elements
@@ -101,6 +102,18 @@ const handleTipSelection = e => {
 inputs.bill.addEventListener('blur', billAmountPerPerson);
 inputs.numberOfPeople.addEventListener('blur', billAmountPerPerson);
 inputs.tipPercentage.addEventListener('click', handleTipSelection);
+inputs.customTip.addEventListener('blur', e => {
+  //set the selected tip percentage to the custom input value
+  selectedTipPercentage = parseFloat(e.target.value) / 100;
+
+  //remove active class from all other tip percentages
+  const allTips = document.querySelectorAll('button');
+  allTips.forEach(tip => {
+    tip.classList.remove('active');
+  });
+
+  billAmountPerPerson(e);
+});
 
 // Reset button
 const resetButton = document.querySelector('.reset-btn');
@@ -109,6 +122,7 @@ const handleReset = () => {
   //reset input and output values
   inputs.bill.value = '';
   inputs.numberOfPeople.value = '';
+  inputs.customTip.value = '';
   outputs.tipPerPerson.textContent = '$0.00';
   outputs.totalPerPerson.textContent = '$0.00';
 
