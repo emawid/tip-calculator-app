@@ -22,23 +22,30 @@
       <div class="form-container">
         <div class="bill-input">
           <div class="cost-input">
-            <label class="input-heading text-preset-5" for="cost-amount"
-              >Bill</label
-            >
+            <div class="people-input-label-wrapper">
+              <label class="input-heading text-preset-5" for="cost-amount"
+                >Bill</label
+              >
+              <span class="span-people text-preset-5 error-msg hidden"
+                >Can't be zero</span
+              >
+            </div>
             <input
               class="user-input text-preset-3"
               type="number"
               id="cost-amount"
-              placeholder="0.00"
+              placeholder="0"
               step="0.01"
-              min="0"
+              min="1"
               required />
           </div>
           <div class="tip-input">
             <p class="input-heading text-preset-5">Select Tip %</p>
             <ul class="text-preset-3">
               <li><button value="0.05">5%</button></li>
-              <li><button value="0.1">10%</button></li>
+              <li>
+                <button id="defaultTip" class="active" value="0.1">10%</button>
+              </li>
               <li><button value="0.15">15%</button></li>
               <li><button value="0.25">25%</button></li>
               <li><button value="0.5">50%</button></li>
@@ -46,15 +53,21 @@
             </ul>
           </div>
           <div class="people-input">
-            <label class="input-heading text-preset-5" for="number-of-people"
-              >Number of People</label
-            >
+            <div class="people-input-label-wrapper">
+              <label class="input-heading text-preset-5" for="number-of-people"
+                >Number of People</label
+              >
+              <span class="span-people text-preset-5 error-msg hidden"
+                >Can't be zero</span
+              >
+            </div>
             <input
               class="user-input text-preset-3"
               type="number"
               id="number-of-people"
-              placeholder="0"
               min="1"
+              step="1"
+              placeholder="0"
               required />
           </div>
         </div>
